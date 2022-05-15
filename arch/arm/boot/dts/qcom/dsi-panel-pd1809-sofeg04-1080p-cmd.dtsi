@@ -1,0 +1,472 @@
+/* Copyright (c) 2015-2017, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&mdss_mdp {
+	dsi_pd1809_sofeg04_1080_cmd: qcom,mdss_dsi_pd1809_sofeg04_1080p_cmd {
+		qcom,mdss-dsi-panel-name = "mdss_dsi_pd1809_sofeg04_1080p_cmd panel";
+		qcom,mdss-dsi-panel-controller = <&mdss_dsi0>;
+		qcom,mdss-dsi-panel-type = "dsi_cmd_mode";
+		qcom,mdss-dsi-project-name = "pd1814";
+		qcom,mdss-dsi-panel-destination = "display_1";
+		qcom,mdss-dsi-panel-framerate = <60>;
+		//qcom,mdss-dsi-panel-clockrate = <1140000000>;
+		qcom,mdss-dsi-virtual-channel-id = <0>;
+		qcom,mdss-dsi-stream = <0>;
+		qcom,mdss-dsi-panel-id = <0x20>;
+		qcom,dynamic-dsi-timing-enable;
+
+		qcom,mdss-dsi-bpp = <24>;
+		qcom,mdss-dsi-underflow-color = <0xff>;
+		qcom,mdss-dsi-border-color = <0>;
+		qcom,mdss-dsi-pixel-packing = "tight";
+
+		qcom,mdss-dsi-traffic-mode = <1>;
+		qcom,mdss-dsi-bllp-eof-power-mode;
+		qcom,mdss-dsi-bllp-power-mode;
+		qcom,mdss-dsi-tx-eot-append;
+		qcom,mdss-dsi-lane-0-state;
+		qcom,mdss-dsi-lane-1-state;
+		qcom,mdss-dsi-lane-2-state;
+		qcom,mdss-dsi-lane-3-state;
+		/*qcom,mdss-dsi-lp11-init;*/
+		/*qcom,mdss-dsi-init-delay-us = <15000>;*/
+
+		qcom,mdss-dsi-dma-trigger = "trigger_sw";
+		qcom,mdss-dsi-mdp-trigger = "none";
+		qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+		qcom,mdss-dsi-reset-sequence = <1 5>, <0 5>, <1 5>;
+		qcom,mdss-pan-physical-width-dimension = <68>;
+		qcom,mdss-pan-physical-height-dimension = <148>;
+		/*qcom,suspend-ulps-enabled;*/
+
+		qcom,mdss-dsi-te-pin-select = <1>;
+		qcom,mdss-dsi-wr-mem-start = <0x2c>;
+		qcom,mdss-dsi-wr-mem-continue = <0x3c>;
+		qcom,mdss-dsi-te-dcs-command = <1>;
+		qcom,mdss-dsi-te-check-enable;
+		qcom,mdss-dsi-te-using-te-pin;
+		qcom,mdss-tear-check-sync-cfg-height = <5000>;
+
+		qcom,mdss-panel-sre;
+		/*qcom,mdss-dsi-panel-hdr-enabled;
+		qcom,mdss-dsi-panel-hdr-color-primaries = <14500 15500 32000 17000 15500 30000 8000 3000>;
+		qcom,mdss-dsi-panel-peak-brightness = <4200000>;
+		qcom,mdss-dsi-panel-blackness-level = <3230>;*/
+		//qcom,panel-supply-entries = <&dsi_panel_pwr_supply_vddio_vci>;
+
+		/*qcom,mdss-dsi-display-timings {
+			timing@0{*/
+		qcom,mdss-dsi-panel-width = <1080>;
+		qcom,mdss-dsi-panel-height = <2340>;
+		qcom,mdss-dsi-h-front-porch = <88>;
+		qcom,mdss-dsi-h-back-porch = <104>;
+		qcom,mdss-dsi-h-pulse-width = <16>;
+		qcom,mdss-dsi-h-sync-skew = <0>;
+		qcom,mdss-dsi-v-front-porch = <28>;
+		qcom,mdss-dsi-v-back-porch = <87>;
+		qcom,mdss-dsi-v-pulse-width = <4>;
+
+		qcom,mdss-dsi-h-left-border = <0>;
+		qcom,mdss-dsi-h-right-border = <0>;
+		qcom,mdss-dsi-v-top-border = <0>;
+		qcom,mdss-dsi-v-bottom-border = <0>;
+
+		qcom,mdss-dsi-panel-timings-phy-v2 = [
+		27 21 0A 0B 07 03 04 a0
+		27 21 0A 0B 07 03 04 a0
+		27 21 0A 0B 07 03 04 a0
+		27 21 0A 0B 07 03 04 a0
+		27 22 0A 0B 07 03 04 a0];
+		qcom,mdss-dsi-t-clk-post = <0x0F>;
+		qcom,mdss-dsi-t-clk-pre = <0x3A>;//0x1B
+
+		qcom,mdss-dsi-bl-min-level = <1>;
+		qcom,mdss-dsi-bl-max-level = <255>;
+
+		qcom,mdss-dsi-on-command = [
+					/* Sleep Out */
+					39 01 00 00 00 00 03 9F A5 A5
+					39 01 00 00 05 00 02 11 00
+					39 01 00 00 00 00 03 9F 5A 5A
+					/* avoid flashing*/
+					39 01 00 00 00 00 03 F0 5A 5A
+					39 01 00 00 00 00 02 B0 6E
+					39 01 00 00 00 00 02 B9 81
+					39 01 00 00 00 00 02 B0 09
+					39 01 00 00 00 00 02 EF 31
+					39 01 00 00 10 00 03 F0 A5 A5
+					/* Common Setting */
+					39 01 00 00 00 00 03 F0 5A 5A
+					39 01 00 00 00 00 02 B0 07
+					39 01 00 00 00 00 02 CD 12
+					39 01 00 00 00 00 03 F0 A5 A5
+					39 01 00 00 00 00 03 9F A5 A5
+					39 01 00 00 00 00 02 35 00
+					39 01 00 00 00 00 03 9F 5A 5A
+					/* ESD S/W work around*/
+					39 01 00 00 00 00 03 FC 5A 5A
+					39 01 00 00 00 00 02 B0 01
+					39 01 00 00 00 00 02 E3 88
+					39 01 00 00 00 00 02 B0 07
+					39 01 00 00 00 00 02 ED 67
+					39 01 00 00 00 00 03 FC A5 A5
+					/* Brightness Setting */
+					39 01 00 00 00 00 03 F0 5A 5A
+					39 01 00 00 00 00 02 B0 07
+					39 01 00 00 00 00 02 B7 01
+					39 01 00 00 00 00 03 F0 A5 A5
+					39 01 00 00 65 00 02 53 20
+					39 01 00 00 00 00 02 55 00
+					/* Display On */
+					39 01 00 00 00 00 03 9F A5 A5
+					39 01 00 00 00 00 02 29 00
+					39 01 00 00 00 00 03 9F 5A 5A
+					39 01 00 00 00 00 03 F0 5A 5A
+					/* ACL dimming setting */
+					39 01 00 00 00 00 02 B0 DE
+					39 01 00 00 00 00 02 B9 48
+					/* seed setting*/
+					39 01 00 00 00 00 02 81 90
+					39 01 00 00 00 00 18 B1 00 00 FF 03 00 15 FF 02 03 0D FF 1D FF EE FF 0F F1 FF F8 01 FF FF FF
+					/* up/down area Magenta/Greenish */
+					39 01 00 00 00 00 03 B6 00 02
+					/* skin color brightness setting*/
+					39 01 00 00 00 00 2E B3 00 C0 0F 02 9A 00 5C 02 89 00 62 01 84 00 AF 01 D2 00 D3 05 00 13 63 07 79 0C D9 64 00 70 94 00 32 DC 88 91 00 A3 AB 06 DA 8D 65 72 49
+					39 01 00 00 00 00 02 83 80
+					39 01 00 00 00 00 03 F0 A5 A5
+		];
+		/* samsung OLED HBM mode */
+		qcom,mdss-oled-hbm-on-command-level1 =
+		[
+			39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 02 B0 07
+			39 01 00 00 00 00 02 B7 28
+			39 01 00 00 00 00 03 F0 A5 A5
+			39 01 00 00 11 00 02 53 28
+			39 01 00 00 00 00 02 53 E8
+			39 01 00 00 00 00 03 51 00 D8
+		];
+
+		qcom,mdss-oled-hbm-on-command-level2 =
+		[
+			39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 02 B0 07
+			39 01 00 00 00 00 02 B7 28
+			39 01 00 00 00 00 03 F0 A5 A5
+			39 01 00 00 11 00 02 53 28
+			39 01 00 00 00 00 02 53 E8
+			39 01 00 00 00 00 03 51 03 FF
+		];
+
+		qcom,mdss-oled-hbm-on-command-ud-fingerprint =
+		[
+			39 00 00 00 00 00 03 F0 5A 5A
+			39 00 00 00 00 00 04 B7 00 01 5B
+			39 00 00 00 00 00 03 F0 A5 A5
+			39 00 00 00 00 00 02 53 E0
+			39 01 00 00 00 00 03 51 03 FF
+		];
+
+		qcom,mdss-oled-ps-off-command =
+		[
+			39 00 00 00 00 00 03 F0 5A 5A
+			39 00 00 00 00 00 03 BD 00 00
+			39 00 00 00 00 00 04 B7 00 01 53
+			39 01 00 00 00 00 03 F0 A5 A5
+		];
+
+		qcom,mdss-oled-ps-on-command =
+		[
+			39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 03 BD 00 02
+			39 01 00 00 00 00 03 F0 A5 A5
+		];
+
+		qcom,mdss-oled-hbm-off-command =
+		[
+			39 01 00 00 00 00 02 53 28
+		];
+
+		qcom,mdss-oled-hbm-off-command-ud-fingerprint =
+		[
+			39 00 00 00 00 00 03 F0 5A 5A
+			39 00 00 00 00 00 03 BD 00 02
+			39 00 00 00 00 00 03 F0 A5 A5
+			39 01 00 00 00 00 02 53 20
+		];
+
+		qcom,mdss-oled-acl-on-command-level1 =
+		[
+			39 01 00 00 00 00 02 55 01
+		];
+
+		qcom,mdss-oled-acl-on-command-level2 =
+		[
+			39 01 00 00 00 00 02 55 02
+		];
+
+		qcom,mdss-oled-acl-on-command-level3 =
+		[
+			39 01 00 00 00 00 02 55 03
+		];
+
+		qcom,mdss-oled-acl-off-command =
+		[
+			39 01 00 00 00 00 02 55 00
+		];
+
+		qcom,mdss-oled-dimming-speed =
+		[
+			39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 02 B0 07
+			39 01 00 00 00 00 02 B7 28
+			39 01 00 00 00 00 03 F0 A5 A5
+			39 01 00 00 00 00 02 53 28
+		];
+
+		qcom,mdss-oled-dimming-speed-off =
+		[
+			39 01 00 00 00 00 02 53 20
+		];
+
+		/* samsung OLED AOD mode, defaut mode  HLPM high brightness */
+		qcom,mdss-oled-aod-on-command =/*don't parse*/
+		[
+			39 01 00 00 00 00 03 9F A5 A5
+			39 01 00 00 11 00 02 28 00
+			39 01 00 00 00 00 03 9F 5A 5A
+			39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 02 B0 DF
+			39 01 00 00 00 00 05 B8 04 01 84 92
+			39 01 00 00 00 00 02 B0 69
+			39 01 00 00 00 00 06 B9 08 08 D0 08 0E
+			39 01 00 00 00 00 02 B0 70
+			39 01 00 00 00 00 02 B9 D7
+			39 01 00 00 00 00 02 B0 0B
+			39 01 00 00 00 00 02 F4 6C
+			39 01 00 00 00 00 02 53 22
+			39 01 00 00 00 00 02 B0 A5
+			39 01 00 00 00 00 02 C7 00
+			39 01 00 00 00 00 03 F0 A5 A5
+			39 01 00 00 00 00 03 9F A5 A5
+			39 01 00 00 00 00 02 13 00
+			39 01 00 00 00 00 02 29 00
+			39 01 00 00 00 00 03 9F 5A 5A
+		];
+
+		qcom,mdss-oled-alpm-on-command =
+		[
+			39 01 00 00 00 00 03 9F A5 A5
+			39 01 00 00 11 00 02 28 00
+			39 01 00 00 00 00 03 9F 5A 5A
+			39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 02 B0 DF
+			39 01 00 00 00 00 05 B8 04 01 84 92
+			39 01 00 00 00 00 02 B0 69
+			39 01 00 00 00 00 06 B9 08 08 D0 08 0E
+			39 01 00 00 00 00 02 B0 70
+			39 01 00 00 00 00 02 B9 D7
+			39 01 00 00 00 00 02 B0 0B
+			39 01 00 00 00 00 02 F4 6C
+			39 01 00 00 00 00 02 53 22
+			39 01 00 00 00 00 02 B0 A5
+			39 01 00 00 00 00 02 C7 00
+			39 01 00 00 00 00 03 F0 A5 A5
+			39 01 00 00 00 00 03 9F A5 A5
+			39 01 00 00 00 00 02 13 00
+			39 01 00 00 00 00 02 29 00
+			39 01 00 00 00 00 03 9F 5A 5A
+		];
+
+		qcom,mdss-oled-alpm-hbirghtness-on-command =
+		[
+			39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 02 B0 DF
+			39 01 00 00 00 00 05 B8 04 01 84 92
+			39 01 00 00 00 00 02 B0 69
+			39 01 00 00 00 00 06 B9 08 08 D0 08 0E
+			39 01 00 00 00 00 02 B0 70
+			39 01 00 00 00 00 02 B9 D7
+			39 01 00 00 00 00 02 B0 0B
+			39 01 00 00 00 00 02 F4 6C
+			39 01 00 00 00 00 02 53 22
+			39 01 00 00 00 00 02 B0 A5
+			39 01 00 00 00 00 02 C7 01
+			39 01 00 00 00 00 03 F0 A5 A5
+		];
+
+		qcom,mdss-oled-alpm-lbirghtness-on-command =
+		[
+			39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 02 B0 DF
+			39 01 00 00 00 00 05 B8 04 01 84 92
+			39 01 00 00 00 00 02 B0 69
+			39 01 00 00 00 00 06 B9 08 08 D0 08 0E
+			39 01 00 00 00 00 02 B0 70
+			39 01 00 00 00 00 02 B9 D7
+			39 01 00 00 00 00 02 B0 0B
+			39 01 00 00 00 00 02 F4 6C
+			39 01 00 00 00 00 02 53 23
+			39 01 00 00 00 00 02 B0 A5
+			39 01 00 00 00 00 02 C7 01
+			39 01 00 00 00 00 03 F0 A5 A5
+		];
+
+		qcom,mdss-oled-hlpm-hbirghtness-on-command =
+		[
+			39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 02 B0 DF
+			39 01 00 00 00 00 05 B8 04 01 84 92
+			39 01 00 00 00 00 02 B0 69
+			39 01 00 00 00 00 06 B9 08 08 D0 08 0E
+			39 01 00 00 00 00 02 B0 70
+			39 01 00 00 00 00 02 B9 D7
+			39 01 00 00 00 00 02 B0 0B
+			39 01 00 00 00 00 02 F4 6C
+			39 01 00 00 00 00 02 53 22
+			39 01 00 00 00 00 02 B0 A5
+			39 01 00 00 00 00 02 C7 00
+			39 01 00 00 00 00 03 F0 A5 A5
+		];
+
+		qcom,mdss-oled-hlpm-lbirghtness-on-command =
+		[
+			39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 02 B0 DF
+			39 01 00 00 00 00 05 B8 04 01 84 92
+			39 01 00 00 00 00 02 B0 69
+			39 01 00 00 00 00 06 B9 08 08 D0 08 0E
+			39 01 00 00 00 00 02 B0 70
+			39 01 00 00 00 00 02 B9 D7
+			39 01 00 00 00 00 02 B0 0B
+			39 01 00 00 00 00 02 F4 6C
+			39 01 00 00 00 00 02 53 23
+			39 01 00 00 00 00 02 B0 A5
+			39 01 00 00 00 00 02 C7 00
+			39 01 00 00 00 00 03 F0 A5 A5
+		];
+
+		qcom,mdss-oled-aod-off-command =
+		[
+			39 01 00 00 00 00 03 9F A5 A5
+			39 01 00 00 00 00 02 22 00
+			39 01 00 00 11 00 02 28 00
+			39 01 00 00 00 00 03 9F 5A 5A
+			39 01 00 00 00 00 02 53 28
+		];
+
+		qcom,mdss-oled-display-on-command =
+		[
+			39 01 00 00 00 00 02 53 20
+			39 01 00 00 00 00 03 9F A5 A5
+			39 01 00 00 00 00 02 13 00
+			39 01 00 00 00 00 02 29 00
+			39 01 00 00 00 00 03 9F 5A 5A
+		];
+
+		qcom,mdss-oled-alpm-off-command =
+		[
+			39 01 00 00 00 00 03 9F A5 A5/*unlock cmd*//*
+			39 01 00 00 11 00 02 22 00
+			39 01 00 00 11 00 02 28 00
+			39 01 00 00 00 00 03 9F 5A 5A/*lock cmd*/
+			39 01 00 00 00 00 02 53 20
+			39 01 00 00 00 00 03 9F A5 A5
+			39 01 00 00 00 00 02 13 00
+			39 01 00 00 00 00 02 29 00
+			39 01 00 00 00 00 03 9F 5A 5A
+		];
+
+		qcom,mdss-oled-aor-test-on-command =
+		[
+			/*39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 03 51 03 FF
+			39 01 00 00 00 00 03 B1 08 F8
+			39 01 00 00 00 00 02 B0 1A
+			39 01 00 00 00 00 02 CB 00
+			39 01 00 00 00 00 02 F7 03
+			39 01 00 00 00 00 03 F0 A5 A5*/
+
+			39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 03 51 03 FF
+			39 01 00 00 00 00 02 B0 60
+			39 01 00 00 00 00 03 B9 09 30
+			/*39 01 00 00 00 00 02 B0 22
+			39 01 00 00 00 00 02 C0 00*/
+			39 01 00 00 00 00 02 B0 27
+			39 01 00 00 00 00 05 C0 20 0B 44 18
+			39 01 00 00 00 00 02 B0 2F
+			39 01 00 00 00 00 02 C0 3C
+			39 01 00 00 00 00 03 C0 00 31
+			39 01 00 00 00 00 02 B0 0F
+			39 01 00 00 00 00 02 F4 00
+			39 01 00 00 00 00 03 F0 A5 A5
+		];
+
+		qcom,mdss-oled-aor-test-off-command =
+		[
+			/*39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 03 B1 00 10
+			39 01 00 00 00 00 02 B0 1A
+			39 01 00 00 00 00 02 CB 03
+			39 01 00 00 00 00 02 F7 03
+			39 01 00 00 00 00 03 F0 A5 A5*/
+
+			39 01 00 00 00 00 03 F0 5A 5A
+			39 01 00 00 00 00 03 51 03 FF
+			39 01 00 00 00 00 02 B0 0F
+			39 01 00 00 00 00 02 F4 13
+			39 01 00 00 00 00 02 B0 27
+			39 01 00 00 00 00 05 C0 E0 0B 68 D8
+			39 01 00 00 00 00 02 B0 2F
+			39 01 00 00 00 00 02 C0 FC
+			39 01 00 00 00 00 02 B0 60
+			39 01 00 00 00 00 03 B9 00 10
+			/*39 01 00 00 00 00 02 B0 22
+			39 01 00 00 00 00 02 C0 03*/
+			39 01 00 00 00 00 03 C0 00 31
+			39 01 00 00 00 00 03 F0 A5 A5
+		];
+
+		qcom,mdss-oled-hbm-gamma-command =
+		[
+			39 00 00 00 00 00 03 F0 5A 5A
+			39 00 00 00 00 00 02 B0 B4
+			39 00 00 00 00 00 2D B8 01 A0 70 1B 0A 52 44 E2 0C 62 A5 00 10 A3 89 47 13 94 31 75 16 C4 E1 A5 1C 26 05 F3 23 A7 92 61 29 78 B6 B5 2F A9 D7 08 12 12 12 01
+			39 01 00 00 00 00 03 F0 A5 A5
+		];
+
+		qcom,mdss-alpm-command-state = "dsi_lp_mode";
+		qcom,mdss-dsi-off-command = [
+					39 01 00 00 00 00 03 9F A5 A5
+					39 01 00 00 11 00 02 28 00/*display off and wait for 16.7ms*/
+
+					/*lrz add 1011 to solve such as x21 flick*/
+					29 00 00 00 00 00 03 F0 5A 5A
+					29 00 00 00 00 00 02 B0 50
+					29 00 00 00 00 00 02 B9 82
+					29 01 00 00 11 00 03 F0 A5 A5/*wait for 16.7ms*/
+
+					39 01 00 00 00 00 02 10 00
+					39 01 00 00 00 00 03 9F 5A 5A
+					39 01 00 00 00 00 03 F0 5A 5A
+					39 01 00 00 00 00 02 B0 05
+					39 01 00 00 00 00 02 F4 01
+					39 01 00 00 97 00 03 F0 A5 A5
+		];
+		qcom,mdss-dsi-on-command-state = "dsi_lp_mode";
+		qcom,mdss-dsi-off-command-state = "dsi_lp_mode";
+		qcom,mdss-dsi-h-sync-pulse = <0>;
+			/*};
+		};*/
+	};
+};

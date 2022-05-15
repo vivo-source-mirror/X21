@@ -1,0 +1,5 @@
+config BBK_GOODIX9118
+	tristate "Goodix GF9118 fingerprint drvier support"
+	help
+	  Say Y here to enable goodix fingerprint driver support!
+

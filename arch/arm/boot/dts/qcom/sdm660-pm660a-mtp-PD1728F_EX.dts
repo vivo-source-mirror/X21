@@ -1,0 +1,246 @@
+/* Copyright (c) 2016-2017, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+/dts-v1/;
+#include "sdm660.dtsi"
+#include "sdm660-mtp-PD1728.dtsi"
+#include "msm-pm660a.dtsi"
+#include "sdm660-internal-codec.dtsi"
+#include "sdm660-vivo-PD1728-otg.dtsi"
+#include "external-charger-vivo-pd1728.dtsi"
+/ {
+	model = "Qualcomm Technologies, Inc. SDM 660 PM660 + PM660A MTP PD1728F_EX";
+	compatible = "qcom,sdm660-mtp", "qcom,sdm660", "qcom,mtp";
+	qcom,board-id = <8 5>;
+	qcom,pmic-id = <0x0001001b 0x0001011a 0x0 0x0>,
+			<0x0001001b 0x0002001a 0x0 0x0>,
+			<0x0001001b 0x0202001a 0x0 0x0>;
+};
+&mdss_dsi {
+	hw-config = "single_dsi";
+};
+&mdss_dsi0 {
+	qcom,dsi-pref-prim-pan = <&dsi_rm67195_amoled_fhd_cmd>;
+	oledb-supply = <&pm660a_oledb>;
+	lab-supply = <&lab_regulator>;
+	ibb-supply = <&ibb_regulator>;
+};
+&mdss_dsi1 {
+	status = "disabled";
+	oledb-supply = <&pm660a_oledb>;
+	lab-supply = <&lab_regulator>;
+	ibb-supply = <&ibb_regulator>;
+};
+&tavil_snd {
+	qcom,msm-mbhc-moist-cfg = <0>, <0>, <3>;
+};
+&tfa_rst_default {
+	mux {
+		pins = "gpio12";
+		function = "gpio";
+	};
+	config {
+		pins = "gpio12";
+		drive-strength = <2>;
+		bias-disable;
+	};
+};
+&i2c_1 {
+	status = "okay";
+	spkr@34 {
+		status = "okay";
+		compatible = "nxp,tfa98xx";
+		reg = <0x34>;
+		vivo,tfa98xx-version = "tfa9891";
+		vivo,tfa98xx-config = "tfa98xx_PD1728F_EX.cnt";
+		vivo,tfa98xx-vddd-supply = <&pm660_l13>;
+		vivo,tfa98xx-impedance-min = <6000>;
+		vivo,tfa98xx-impedance-max = <10000>;
+		vivo,tfa98xx-frequency-min = <600>;
+		vivo,tfa98xx-frequency-max = <900>;
+		vivo,tfa98xx-Qt-min = <125>;
+		reset-gpio = <&tlmm 12 0>;
+		pinctrl-names = "default";
+	    	pinctrl-0 = <&tfa_rst_default>;
+	};
+};
+&i2c_6 {
+	status = "okay";
+	ak4376: ak4376@20 {
+		status = "okay";
+		compatible = "ak,ak4376";
+		reg = <0x10>;
+		vivo,hifi-1v8-supply = <&hifi_1v8>;
+		ext-dac-rst-gpio = <&tlmm 28 0>;
+		vivo,reg_table = <0xb 0x18 0xc 0x18 0xd 0x0b 0x2a 0x0c>;
+		clock-names = "ak43xx_mclk";
+		clocks = <&clock_rpmcc RPM_LN_BB_CLK2>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&hifi_rst_default>;
+	};
+};
+&dai_mi2s1 {
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&mi2s_2_clk_active &mi2s_2_data_active>;
+	pinctrl-1 = <&mi2s_2_clk_sleep &mi2s_2_data_sleep>;
+};
+&lpi_mi2s_3_active {
+	config {
+		drive-strength = <6>;
+	};
+};
+&lpi_mi2s_3_sleep {
+	config {
+		bias-pull-down;
+	};
+};
+&int_codec {
+	status = "okay";
+	qcom,model = "sdm660-snd-card-cdp";
+	qcom,msm-dynamic-dai-links =
+		"qcom,mi2s-tert-hifi-rx",
+		"qcom,mi2s-sec-tfa-spk-rx",
+		"qcom,mi2s-sec-tfa-spk-tx";
+	qcom,wsa-disable;
+	qcom,msm-mbhc-hphl-swh = <1>;
+	qcom,msm-mbhc-gnd-swh = <0>;
+	qcom,msm-micbias1-ext-cap;
+	qcom,msm-micbias2-ext-cap;
+	qcom,msm-hs-micbias-type = "external";
+	/delete-property/ qcom,wsa-max-devs;
+	/delete-property/ qcom,wsa-devs;
+	/delete-property/ qcom,wsa-aux-dev-prefix;
+	asoc-codec = <&stub_codec>, <&msm_digital_codec>,
+				<&pmic_analog_codec>;
+	asoc-codec-names = "msm-stub-codec.1", "msm-dig-codec",
+				"analog-codec";
+	qcom,audio-routing =
+			"RX_BIAS", "INT_MCLK0",
+			"SPK_RX_BIAS", "INT_MCLK0",
+			"INT_LDO_H", "INT_MCLK0",
+			"MIC BIAS External", "Handset Mic",
+			"MIC BIAS External2", "Headset Mic",
+			"MIC BIAS External", "Secondary Mic",
+			"AMIC1", "MIC BIAS External",
+			"AMIC2", "MIC BIAS External2",
+			"AMIC3", "MIC BIAS External",
+			"PDM_IN_RX1", "PDM_OUT_RX1",
+			"PDM_IN_RX2", "PDM_OUT_RX2",
+			"PDM_IN_RX3", "PDM_OUT_RX3",
+			"ADC1_IN", "ADC1_OUT",
+			"ADC2_IN", "ADC2_OUT",
+			"ADC3_IN", "ADC3_OUT";
+	//sound-card infomation
+	vivo,builtin-mic-num = <2>;
+	vivo,hifi-support;
+	vivo,hifi-always-with-switch;
+	vivo,spa-driver-type = <1>;
+	vivo,spa-num = <1>;
+	vivo,spa-manufacturer = <0>;
+	vivo,fm-support;
+	vivo,fm-hostless-pcm-spk = <38>;
+	vivo,fm-hostless-pcm-hp = <38>;
+	vivo,mbhc-btn-defs = <112 224 480 480 480 112 224 480 480 480>;
+};
+&pmic_analog_codec {
+	status = "okay";
+	qcom,cdc-micbias-cfilt-mv = <2800000>;
+	qcom,headset-irq-gpio = <&tlmm 44 0>;
+	pinctrl-names = "headset_gpio_irq";
+	pinctrl-0 =  <&headset_gpio_irq_default>;
+};
+&wcd9335 {
+	status = "disabled";
+};
+&wcd934x_cdc {
+	status = "disabled";
+};
+&clock_audio {
+	status = "disabled";
+};
+&wcd_rst_gpio {
+	status = "disabled";
+};
+&wcd9xxx_intc {
+	status = "disabled";
+};
+&tasha_snd {
+	status = "disabled";
+};
+&tavil_snd {
+	status = "disabled";
+};
+&msm_sdw_codec {
+	status = "disabled";
+};
+/*add by vivo sensor team for start*/
+&red_led {
+	linux,name = "NONE";
+	qcom,pwm-us = <40>;
+	vivo,duty-cycle = <179>;
+	status = "disabled";
+};
+&blue_led {
+	linux,name = "red";
+	vivo,duty-cycle = <100>;
+	qcom,start-idx = <1>;
+	qcom,idx-len = <11>;
+	qcom,duty-pcts = [10 00 00 00 00
+		00 00 00 00 00 00];
+	qcom,lut-flags = <3>;
+	qcom,pause-lo = <0>;
+	qcom,pause-hi = <0>;
+	qcom,ramp-step-ms = <200>;
+	qcom,max-current = <6>;
+	qcom,turn-off-delay-ms = <500>;
+	qcom,use-blink;
+};
+&green_led {
+	vivo,duty-cycle = <100>;
+};
+&pm660_haptics{
+			qcom,actuator-type = "erm";
+			qcom,play-mode = "direct";
+			qcom,vmax-mv = <2800>;
+			qcom,ilim-ma = <800>;
+			qcom,wave-shape = "square";
+			qcom,wave-play-rate-us = <6667>;
+			qcom,int-pwm-freq-khz = <505>;
+			qcom,sc-deb-cycles = <8>;
+			qcom,en-brake;
+			qcom,brake-pattern = [00 00 00 00];
+			//qcom,lra-high-z = "opt0";
+			//qcom,lra-auto-res-mode = "qwd";
+			//qcom,lra-calibrate-at-eop = <0>;
+			//qcom,correct-lra-drive-freq;
+			//vivo,vibrator_enable = <&tlmm 30 0>;
+};
+&soc {
+	gpio_keys {
+		status = "okay";
+		compatible = "gpio-keys";
+		input-name = "gpio-keys";
+		vol_up {
+			label = "volume_up";
+			gpios = <&pm660l_gpios 7 0x1>;
+			linux,input-type = <1>;
+			linux,code = <115>;
+			gpio-key,wakeup;
+			debounce-interval = <15>;
+		};
+	};
+	// add by sensor team -laiyangming add for gsensor switch start
+	switch_gsensor {
+		compatible = "vivo-gsensor";
+		sensor-name = "gsensor";
+	};
+};
+/*add by sensor team end*/

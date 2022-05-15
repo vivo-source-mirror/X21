@@ -1,0 +1,5 @@
+config BBK_FS9501
+	tristate "SYNAPTICS OEM fingerprint FS9501 support"
+	help
+	  Say Y here to enable synaptics fingerprint driver support!
+

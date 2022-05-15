@@ -1,0 +1,52 @@
+/* otg relative config for adc method*/
+
+&pm660_gpios{
+		gpio@c200 {
+			reg = <0xc200 0x100>;
+			qcom,pin-num = <3>;
+			status = "ok";
+			/*qcom,mode = <3>; //ANA_PASS_THRU*/
+			qcom,master-en = <0>; /* disable GPIO */
+		};
+};
+
+&pm660_vadc{
+		chan@13 {
+			label = "usbvol";
+			reg = <0x13>; // channel for GPIO3
+			qcom,decimation = <2>;
+			qcom,pre-div-channel-scaling = <0>; //1:1 scaling
+			qcom,calibration-type = "absolute";
+			qcom,scale-function = <0>; // this should be 0, not 2
+			qcom,hw-settle-time = <2>;
+			qcom,fast-avg-setup = <0>;
+		};
+};
+
+
+&usb3{
+		qcom,hsusb-otg-mode = <3>; /* OTG */
+		qcom,usbidvol-gpio = <&tlmm 73 0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&usbid_vol_default>;
+		qcom,usbidvol-vadc = <&pm660_vadc>;
+		qcom,usbid_adc_used;
+		adc,channel_num = <0x13>;
+};
+
+&usbid {
+		/*qcom,pins = <&gp 73>;*/
+		pins = "gpio73";
+		qcom,num-grp-pins = <1>;
+		qcom,pin-func = <0>;
+		label = "usbid-vol-pin";
+		usbid_vol_default: default {
+			drive-strength = <8>;
+			/*bias-pull-up;*/
+			output-high;
+		};
+};
+
+&qusb_phy0 {
+		qcom,tune2-efuse-temp-correction = <(-3)>;
+};

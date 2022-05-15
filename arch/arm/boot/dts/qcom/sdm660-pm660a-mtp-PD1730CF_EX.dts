@@ -1,0 +1,116 @@
+/* Copyright (c) 2017, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+
+/dts-v1/;
+
+#include "sdm660.dtsi"
+#include "sdm636-mtp-PD1730C.dtsi"
+#include "msm-pm660a.dtsi"
+#include "sdm660-internal-codec.dtsi"
+#include "external-charger-vivo-pd1730ca.dtsi"
+#include "sdm636-vivo-PD1730CF-otg.dtsi"
+
+/ {
+	model = "Qualcomm Technologies, Inc. SDM 660 PM660 + PM660A MTP PD1730CF_EX";
+	compatible = "qcom,sdm660-mtp", "qcom,sdm660", "qcom,mtp";
+	qcom,board-id = <8 21>;
+	qcom,pmic-id = <0x0001001b 0x0001011a 0x0 0x0>,
+			<0x0001001b 0x0002001a 0x0 0x0>,
+			<0x0001001b 0x0202001a 0x0 0x0>;
+};
+
+&mdss_dsi {
+	hw-config = "single_dsi";
+};
+
+&mdss_dsi0 {
+	qcom,dsi-pref-prim-pan = <&dsi_rm67195_amoled_fhd_cmd>;
+	oledb-supply = <&pm660a_oledb>;
+	lab-supply = <&lab_regulator>;
+	ibb-supply = <&ibb_regulator>;
+};
+
+&mdss_dsi1 {
+	status = "disabled";
+	oledb-supply = <&pm660a_oledb>;
+	lab-supply = <&lab_regulator>;
+	ibb-supply = <&ibb_regulator>;
+};
+
+/*add by vivo sensor team for haptic*/
+&green_led {
+	vivo,duty-cycle = <150>;
+};
+/*add by vivo sensor team for remove  led*/
+&red_led{
+	linux,name ="none";
+};
+&blue_led{
+	linux,name ="none2";
+};
+/*add by vivo sensor team for remove  led*/
+&pm660_haptics{
+			qcom,actuator-type = "erm";
+			qcom,play-mode = "direct";
+			qcom,vmax-mv = <2800>;
+			qcom,ilim-ma = <800>;
+			qcom,wave-shape = "square";
+			qcom,wave-play-rate-us = <6667>;
+			qcom,int-pwm-freq-khz = <505>;
+			qcom,sc-deb-cycles = <8>;
+			qcom,en-brake;
+			qcom,brake-pattern = [00 00 00 00];
+			//qcom,lra-high-z = "opt0";
+			//qcom,lra-auto-res-mode = "qwd";
+			//qcom,lra-calibrate-at-eop = <0>;
+			//qcom,correct-lra-drive-freq;
+			//vivo,vibrator_enable = <&tlmm 53 0>;
+};
+&soc {
+	gpio_keys {
+		status = "okay";
+		compatible = "gpio-keys";
+		input-name = "gpio-keys";
+		vol_up {
+			label = "volume_up";
+			gpios = <&pm660l_gpios 7 0x1>;
+			linux,input-type = <1>;
+			linux,code = <115>;
+			gpio-key,wakeup;
+			debounce-interval = <15>;
+		};
+	};
+	/*vivo sensor team added for sar power*/
+	sar_power: sar_power_device {
+		compatible = "sar-power";
+		interrupt-parent = <&tlmm>;
+		interrupts = <42 0x2>,
+                 <43 0x2>;
+		sar-power-rf-detect,gpios = <&tlmm 42 0>;
+		sar-power-rf-detect_1,gpios = <&tlmm 43 0>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&sar_power_no_pull>;
+	};
+	/*vivo sensor team added end*/
+	// add by sensor team -laiyangming add for gsensor switch start 
+	switch_gsensor {
+		compatible = "vivo-gsensor";
+		sensor-name = "gsensor";
+	};
+	//add by sensor team  laiyangming add for gsensor switch end
+};
+
+/*add by zousheng for SmartPA*/
+&max98927 {
+	max989xx-ssm-configuration = <0xa5>;
+};

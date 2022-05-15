@@ -1,0 +1,42 @@
+config VIVO_REGDUMP
+	bool "vivo audio register dump enable"
+		
+config SND_HIFI_CODEC_COMMON
+	bool "Enable HiFi Codec Common Support"
+	help
+		For HiFi Codec Common Support.
+
+config SND_HIFI_CODEC_TD1608
+	bool "Enable VIVO codec for TD1608"
+	help
+		To add support for SoC audio on HiFi codec for TD1608.
+
+config SND_HIFI_CODEC_PD1710
+	bool "Enable VIVO codec for PD1710"
+	help
+		To add support for SoC audio on HiFi codec for PD1710.
+
+config SND_TFA98XX
+	bool "Enable TFA98XX"
+	help
+		To add support for SoC audio on TFA98XX.
+		
+config SND_AK4376
+	bool "Enable ak4376 DAC"
+	help
+		To add support headphone hifi music performance
+
+config SND_SOC_MAX98927
+	bool "Enable MAX98927"
+	help
+		To add support for SoC audio on MAX98927.
+
+config SND_ES9118
+	bool "Enable ES9118 DAC"
+	help
+		To add support for SoC audio on ES9118.
+
+config SND_VIVO_AUDIO_TEST
+	bool "Enable vivo audio stress test"
+	help
+		To add support for SoC audio stress test.

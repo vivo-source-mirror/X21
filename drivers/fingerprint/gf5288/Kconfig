@@ -1,0 +1,5 @@
+config BBK_GOODIX5288
+	tristate "Goodix GF5288 fingerprint drvier support"
+	help
+	  Say Y here to enable goodix fingerprint driver support!
+
